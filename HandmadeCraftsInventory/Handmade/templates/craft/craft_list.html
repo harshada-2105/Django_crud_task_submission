@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Craft List</title>
+</head>
+<body>
+    <h1>Craft List</h1>
+    <a href="{% url 'CraftCreate' %}"><button>Create</button></a>
+
+    {% if crafts %}
+    {% for craft in crafts %}
+    <ul>
+        <li><img src="{{craft.craft_image.url}}" alt="{{craft.craft_name}}" width="500px"></li>
+        <li>craft_name : {{craft.craft_name}}</li>
+        <li>material_used : {{craft.material_used}}</li>
+        <li>price : {{craft.price}}</li>
+        <li>stock : {{craft.stock}}</li>
+        <li>craft_description : {{craft.craft_description}}</li>
+        <li>
+            <a href="{% url 'CraftUpdate' craft.pk %}"><button>Edit</button></a>
+            <a href="{% url 'CraftDelete' craft.pk %}"><button>Delete</button></a>
+        </li>
+    </ul>
+    {% endfor %}
+    {% else %}
+    <p>No Crafts in list yet.</p>
+    {% endif %}
+</body>
+</html>

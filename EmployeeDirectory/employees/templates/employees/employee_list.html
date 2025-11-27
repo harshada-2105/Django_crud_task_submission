@@ -1,0 +1,66 @@
+{% extends 'employees/base.html' %}
+{% block title %}Employees — Employee Directory{% endblock %}
+
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3">Employees</h1>
+    <a class="btn btn-primary" href="{% url 'employees:add' %}">+ Add Employee</a>
+</div>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Position</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emp in employees %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="{% url 'employees:detail' emp.pk %}">{{ emp.first_name }} {{ emp.last_name }}</a></td>
+            <td>{{ emp.email }}</td>
+            <td>{{ emp.department }}</td>
+            <td>{{ emp.position }}</td>
+            <td>
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'employees:edit' emp.pk %}">Edit</a>
+                <a class="btn btn-sm btn-outline-danger" href="{% url 'employees:delete' emp.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No employees found. <a href="{% url 'employees:add' %}">Add one</a>.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+
+
+        <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+
+
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

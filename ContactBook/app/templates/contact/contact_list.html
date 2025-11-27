@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #222;
+        }
+        .create-btn {
+            display: block;
+            width: 180px;
+            margin: 15px auto;
+            text-align: center;
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .create-btn:hover {
+            background-color: #218838;
+        }
+        ul {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px 20px;
+            width: 400px;
+            margin: 15px auto;
+            list-style: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        li {
+            margin: 6px 0;
+        }
+        strong {
+            color: #555;
+        }
+        button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        a button:first-child {
+            background-color: #007bff;
+            color: white;
+        }
+        a button:last-child {
+            background-color: #dc3545;
+            color: white;
+        }
+        a button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contact List</h1>
+
+    <a href="{% url 'ContactCreate' %}" class="create-btn">+ Create New Contact</a>
+
+    {% for contact in contacts %}
+    <ul>
+        <li><strong>First Name:</strong> {{ contact.firstname }}</li>
+        <li><strong>Last Name:</strong> {{ contact.lastname }}</li>
+        <li><strong>Phone:</strong> {{ contact.phone }}</li>
+        <li><strong>Email:</strong> {{ contact.email }}</li>
+        <li><strong>Address:</strong> {{ contact.address }}</li>
+        <li><strong>Date of Birth:</strong> {{ contact.date_of_birth }}</li>
+        <li><strong>Company Name:</strong> {{ contact.company_name }}</li>
+        <li><strong>Job Title:</strong> {{ contact.job_title }}</li>
+        <li><strong>Notes:</strong> {{ contact.notes }}</li>
+        <li><strong>Favourite:</strong> {{ contact.is_favourite }}</li>
+        <li>
+            <a href="{% url 'contact_edit' contact.pk %}"><button>Edit</button></a>
+            <a href="{% url 'contact_delete' contact.pk %}"><button>Delete</button></a>
+        </li>
+    </ul>
+    {% endfor %}
+</body>
+</html>

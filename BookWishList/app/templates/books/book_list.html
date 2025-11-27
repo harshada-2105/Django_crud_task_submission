@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Book Wish List</title>
+    <style>
+        /* --- Basic Page Styling --- */
+        :root{
+            --blue: #4b6cb7;
+            --blue-dark: #182848;
+            --green: #28a745;
+            --red: #dc3545;
+            --muted: #666;
+            --card-bg: #fff;
+            --page-bg: #f8f9fa;
+        }
+
+        html,body{
+            height:100%;
+            margin:0;
+            padding:0;
+            background: var(--page-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            background-color: var(--blue);
+            color: white;
+            padding: 20px;
+            margin: 0 0 30px 0;
+        }
+
+        /* --- Book Card Style --- */
+        .card {
+            list-style: none;
+            background: var(--card-bg);
+            border: 1px solid #e6e6e6;
+            border-radius: 10px;
+            width: calc(100% - 40px);
+            max-width: 860px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.06);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+        }
+
+        .card li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        strong {
+            color: var(--blue);
+        }
+
+        /* --- Action Buttons (Edit/Delete) --- */
+        .actions {
+            margin-top: 12px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .btn-edit {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .btn-delete {
+            background: var(--red);
+            color: #fff;
+        }
+
+        .btn:hover {
+            filter: brightness(0.95);
+        }
+
+        /* --- Create Button --- */
+        .create-btn {
+            display: block;
+            width: fit-content;
+            margin: 28px auto;
+            background-color: var(--green);
+            border-radius: 8px;
+            padding: 10px 18px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(40,167,69,0.12);
+        }
+
+        .create-btn:hover {
+            background-color: #1e7e34;
+        }
+
+        p.empty {
+            text-align: center;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 40px;
+        }
+
+        /* --- Pagination Styling --- */
+        .pagination-controls {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 24px auto 60px;
+            max-width: 860px;
+        }
+
+        .pagination-controls .page-link,
+        .pagination-controls a,
+        .pagination-controls span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 46px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            color: #333;
+            font-weight: 600;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+        }
+
+        .pagination-controls a:hover {
+            box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+        }
+
+        .pagination-controls .page-current {
+            background: var(--blue);
+            color: #fff;
+            border-color: var(--blue);
+        }
+
+        .pagination-controls .page-disabled {
+            opacity: 0.45;
+            pointer-events: none;
+            background: #fafafa;
+        }
+
+        /* small screens */
+        @media (max-width:640px){
+            .card { padding: 14px; width: calc(100% - 20px); }
+            .pagination-controls .page-link, .pagination-controls a, .pagination-controls span { min-width: 40px; padding: 6px 10px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>📚 Book Wish List</h1>
+
+    {% if books %}
+        {% for book in books %}
+        <ul class="card">
+            <li><strong>Title:</strong> {{ book.title }}</li>
+            <li><strong>Author:</strong> {{ book.author }}</li>
+            <li><strong>Genre:</strong> {{ book.genre }}</li>
+            <li><strong>Why do you want to read it:</strong> {{ book.why_to_read }}</li>
+            <li><strong>Status:</strong> {{ book.status }}</li>
+            <li><strong>Created at:</strong> {{ book.date_added|date:"F d, Y" }}</li>
+
+            <div class="actions">
+                <a class="btn btn-edit" href="{% url 'book_update' book.pk %}">Edit</a>
+                <a class="btn btn-delete" href="{% url 'book_delete' book.pk %}">Delete</a>
+            </div>
+        </ul>
+        {% endfor %}
+    {% else %}
+        <p class="empty">No books in your wish list yet.</p>
+    {% endif %}
+
+    <a class="create-btn" href="{% url 'book_create' %}">+ Add New Book</a>
+
+    <!-- pagination -->
+    <div class="pagination-controls" role="navigation" aria-label="Pagination">
+        {% if books.has_previous %}
+            <a class="page-link" href="?page=1">First</a>
+            <a class="page-link" href="?page={{ books.previous_page_number }}">Prev</a>
+        {% else %}
+            <span class="page-link page-disabled">First</span>
+            <span class="page-link page-disabled">Prev</span>
+        {% endif %}
+
+        {# current / total #}
+        <span class="page-link page-current">{{ books.number }}</span>
+        <span class="page-link">of</span>
+        <span class="page-link">{{ books.paginator.num_pages }}</span>
+
+        {% if books.has_next %}
+            <a class="page-link" href="?page={{ books.next_page_number }}">Next</a>
+            <a class="page-link" href="?page={{ books.paginator.num_pages }}">Last</a>
+        {% else %}
+            <span class="page-link page-disabled">Next</span>
+            <span class="page-link page-disabled">Last</span>
+        {% endif %}
+    </div>
+</body>
+</html>

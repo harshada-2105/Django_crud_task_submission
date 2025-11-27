@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket List</title>
+</head>
+<body>
+    <h1>Ticket List</h1>
+    <button><a href="{% url 'TicketCreate' %}">Create</a></button>
+    {% if tickets%}
+    {% for ticket in tickets %}
+    <li>title : {{ticket.title}}</li>
+    <li>description : {{ticket.description}}</li>
+    <li>status : {{ticket.status}}</li>
+    <li>priority : {{ticket.priority}}</li>
+    <li>
+        <button><a href="{% url 'TicketUpdate' ticket.pk %}">Edit</a></button>
+        <button><a href="{% url 'TicketDelete' ticket.pk %}">Delete</a></button>
+    </li>
+    {% endfor%}
+    {% else %}
+    <p>No tickets yet.</p>
+    {% endif %}
+</body>
+</html>

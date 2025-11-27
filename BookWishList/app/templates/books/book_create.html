@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Create</title>
+    <style>
+        /* --- General Page Styling --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* --- Heading --- */
+        h1 {
+            color: #4b6cb7;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* --- Form Container --- */
+        form {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        /* --- Form Elements --- */
+        form input[type="text"],
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        form input:focus,
+        form textarea:focus,
+        form select:focus {
+            border-color: #4b6cb7;
+            outline: none;
+            box-shadow: 0 0 4px rgba(75, 108, 183, 0.4);
+        }
+
+        /* --- Submit Button --- */
+        button {
+            background-color: #4b6cb7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #182848;
+        }
+
+        /* --- Link to Go Back --- */
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4b6cb7;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>📘 Create New Book Wish</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Book</button>
+    </form>
+
+    <a href="{% url 'book_list' %}" class="back-link">← Back to Book List</a>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Delete</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 20px;
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+        form {
+            display: inline-block;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Are you sure you want to delete the contact?</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <button>Delete</button>
+    </form>
+</body>
+</html>

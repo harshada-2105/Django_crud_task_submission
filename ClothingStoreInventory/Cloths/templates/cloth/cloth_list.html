@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloth List</title>
+</head>
+<body>
+    <h1>Cloth List</h1>
+    <a href="{% url 'ClothCreate' %}"><button>Create</button></a>
+    {% if cloths %}
+    {% for cloth in cloths %}
+    <ul type="none">
+        <li><img src="{{cloth.item_photo.url}}" alt="{{cloth.item_name}}"></li>
+        <li>item_name : {{cloth.item_name}}</li>
+        <li>size : {{cloth.size}}</li>
+        <li>color : {{cloth.color}}</li>
+        <li>price : {{cloth.price}}</li>
+        <li>
+            <a href="{% url 'ClothUpdate' cloth.pk %}"><button>Edit</button></a>
+            <a href="{% url 'ClothDelete' cloth.pk %}"><button>Delete</button></a>
+        </li>
+    </ul>
+    {% endfor %}
+    {% else %}
+    <p>No cloths in list.</p>
+    {% endif %}
+    
+</body>
+</html>

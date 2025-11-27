@@ -1,0 +1,24 @@
+{% extends 'employees/base.html' %}
+{% block title %}{{ employee }} — Employee Directory{% endblock %}
+
+
+{% block content %}
+<h1 class="h3">{{ employee.first_name }} {{ employee.last_name }}</h1>
+<dl class="row">
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">{{ employee.email }}</dd>
+    <dt class="col-sm-3">Phone</dt>
+    <dd class="col-sm-9">{{ employee.phone }}</dd>
+    <dt class="col-sm-3">Department</dt>
+    <dd class="col-sm-9">{{ employee.department }}</dd>
+    <dt class="col-sm-3">Position</dt>
+    <dd class="col-sm-9">{{ employee.position }}</dd>
+    <dt class="col-sm-3">Date Joined</dt>
+    <dd class="col-sm-9">{{ employee.date_joined }}</dd>
+</dl>
+
+
+<a class="btn btn-secondary" href="{% url 'employees:edit' employee.pk %}">Edit</a>
+<a class="btn btn-danger" href="{% url 'employees:delete' employee.pk %}">Delete</a>
+<a class="btn btn-link" href="{% url 'employees:list' %}">Back to list</a>
+{% endblock %}
